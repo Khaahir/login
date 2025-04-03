@@ -58,7 +58,7 @@ function SignUp() {
             </form>
           </div>
           <div className="btn-1">
-            <Link to={"/login"}>
+            <Link to={"/"}>
               <button className="btn" onClick={signUp}>
                 SKAPA
               </button>

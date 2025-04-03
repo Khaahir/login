@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function LogIn() {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userpassword, setUserpassword] = useState("");
   const [users, setUsers] = useState([]);
+  const [loginSuccess , setLoginSuccess] = useState(null)
 
   const LogInApi = async () => {
     const res = await fetch("http://localhost:8000/api/users");
@@ -25,10 +29,20 @@ function LogIn() {
 
     if (foundUser) {
       console.log("user found Logging in");
+      setLoginSuccess(true)
     } else {
       console.log("user not found try another name name");
+      setLoginSuccess(false)
+
     }
+
   };
+
+  useEffect(()=>{
+    if(loginSuccess === true){
+      navigate("home")
+    }
+  },[loginSuccess])
 
   return (
     <>
@@ -50,6 +64,12 @@ function LogIn() {
             onChange={(e) => setUserpassword(e.target.value)}
           />
         </div>
+
+         <p>{loginSuccess === false &&  "Fel användarnamn eller lösenord"
+          }</p>
+         <p>{loginSuccess === true && "Du loggas in...."}</p>
+      
+         
         <button onClick={handleLogin}>Login</button>
         <div>
           <Link to={"/signup"}>
