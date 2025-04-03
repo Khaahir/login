@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import "./LogIn.css";
 import "./SignUp.css";
+import "./Home.css"
 import Routes from "./components/Routes.jsx";
 
 createRoot(document.getElementById("root")).render(

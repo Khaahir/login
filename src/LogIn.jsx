@@ -24,7 +24,7 @@ function LogIn() {
 
   const handleLogin = () => {
     const foundUser = users.find(
-      (e) => e.name === userName && e.password === userpassword
+      (e) => e.username === userName && e.password === userpassword
     );
 
     if (foundUser) {

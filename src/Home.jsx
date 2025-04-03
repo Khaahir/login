@@ -16,8 +16,8 @@ function Home() {
     }
   };
 
-  const deleteUser = async () =>{
-    const data = await fetch(`http://localhost:8000/api/users/${remove}`,{
+  const deleteUser = async (id) =>{
+    const data = await fetch(`http://localhost:8000/api/users/${id}`,{
       method: "DELETE",
       headers: {"Content-Type" : "application/json"}
 
@@ -41,30 +41,49 @@ function Home() {
 
   return (
     <>
-      <header>
-        <h1>USERDATABASE</h1>
+      <header className="header">
+        <h1 className="title">User Database</h1>
       </header>
-
-      <main>
-        <ul>
+  
+      <main className="main">
+        <ul className="user-list">
           {users.map((user) => (
-            <li key={user.id || user._id}>
-              <span> id:{user.id}  Name: {user.name} Email: {user.email} </span>
+            <li key={user.id || user._id} className="user-card">
+              <div className="user-info">
+                <p><strong>ID:</strong> {user._id}</p>
+                <p><strong>Name:</strong> {user.username}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+              </div>
+              <button className="delete-button" onClick={() => deleteUser(user._id)}>
+                Delete User
+              </button>
             </li>
           ))}
         </ul>
-
-        <h1>Delete  users here </h1>
-        <form>
-          <input type="text" value={remove} placeholder="delete user with it's ID"
-          onChange={(e)=> setDeleteUser(e.target.value)} />
+  
+        <h2 className="delete-title">Delete users manually</h2>
+        <form
+          className="delete-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            deleteUser(remove);
+          }}
+        >
+          <input
+            type="text"
+            value={remove}
+            placeholder="Enter user ID"
+            onChange={(e) => setDeleteUser(e.target.value)}
+            className="delete-input"
+          />
+          <button className="delete-button">Delete User</button>
         </form>
-        <button onClick={deleteUser}>Delete User</button>
       </main>
-
-      <footer>Copyright &copy; 2025</footer>
+  
+      <footer className="footer">© 2025 UserDB</footer>
     </>
   );
+  
 }
 
 export default Home;
