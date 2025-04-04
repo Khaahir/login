@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const [users, setUsers] = useState([]);
-  const [remove, setDeleteUser] = useState()
-
+  const [remove, setDeleteUser] = useState();
 
   const showUsers = async () => {
     try {
@@ -16,51 +15,54 @@ function Home() {
     }
   };
 
-  const deleteUser = async (id) =>{
-    const data = await fetch(`http://localhost:8000/api/users/${id}`,{
+  const deleteUser = async (id) => {
+    const data = await fetch(`http://localhost:8000/api/users/${id}`, {
       method: "DELETE",
-      headers: {"Content-Type" : "application/json"}
-
-    })
-    if(data.ok){
-      console.log("user is deleted")
-      showUsers()
-    }else{
-      console.log("user did not get deleted ")
+      headers: { "Content-Type": "application/json" },
+    });
+    if (data.ok) {
+      console.log("user is deleted");
+      showUsers();
+    } else {
+      console.log("user did not get deleted ");
     }
-  }
-
-
+  };
 
   useEffect(() => {
     showUsers();
   }, []);
-
-  useEffect(()=>{
-  },[deleteUser])
 
   return (
     <>
       <header className="header">
         <h1 className="title">User Database</h1>
       </header>
-  
+
       <main className="main">
         <ul className="user-list">
           {users.map((user) => (
             <li key={user.id || user._id} className="user-card">
               <div className="user-info">
-                <p><strong>ID:</strong> {user._id}</p>
-                <p><strong>Name:</strong> {user.username}</p>
-                <p><strong>Email:</strong> {user.email}</p>
+                <p>
+                  <strong>ID:</strong> {user._id}
+                </p>
+                <p>
+                  <strong>Name:</strong> {user.username}
+                </p>
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
               </div>
-              <button className="delete-button" onClick={() => deleteUser(user._id)}>
+              <button
+                className="delete-button"
+                onClick={() => deleteUser(user._id)}
+              >
                 Delete User
               </button>
             </li>
           ))}
         </ul>
-  
+
         <h2 className="delete-title">Delete users manually</h2>
         <form
           className="delete-form"
@@ -79,11 +81,10 @@ function Home() {
           <button className="delete-button">Delete User</button>
         </form>
       </main>
-  
+
       <footer className="footer">© 2025 UserDB</footer>
     </>
   );
-  
 }
 
 export default Home;
